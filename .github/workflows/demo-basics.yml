@@ -19,8 +19,8 @@ jobs:
         run: |
           echo "Server starting ....."
           echo "Package name: ${{ env.PACKAGE_NAME }}"
-          python "web server/server.py"
-          python "web server/test.py"
+          python "demo-project-31/web server/server.py"
+          python "demo-project-31/web server/test.py"
 
         
   
