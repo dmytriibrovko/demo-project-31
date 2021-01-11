@@ -17,15 +17,15 @@ jobs:
     steps:
       
       - name: Git clone repo
-        uses: actions/checkout@v1 
-         
-      - name: Start server
+        uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      - run: pip install -r requirements.txt
+       
+      - name: Main test
         run: |
-          echo "Server starting ....."
-          echo "Package name: ${{ env.PACKAGE_NAME }}"
-          ls -la
-          pip install -r requirements.txt
-          python "web server/server.py"
           python "web server/test.py"
 
         
