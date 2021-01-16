@@ -5,3 +5,5 @@ web_server/__pycache__/
 /terraform/terraform.tfstate.backup
 /terraform/.terraform.lock.hcl
 /terraform/.terraform/
+/terraform/main.tf/
+/terraform/crash.log

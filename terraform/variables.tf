@@ -1,3 +1,6 @@
+variable "project_name" {
+  description = "Project name"
+}
 variable "region" {
   type        = string
   description = "Region name"
@@ -7,11 +10,12 @@ variable "cidr_vpc" {
   default     = "10.1.0.0/16"
 }
 variable "cidr_subnet" {
-  description = "CIDR block for the subnet"
-  default     = "10.1.0.0/24"
+  default = ["10.0.10.0/24", "10.0.20.0/24"]
+  type = list
 }
 variable "availability_zone" {
   description = "Availability zone to create subnet"
+  default     = []
 }
 variable "common-tags" {
   description = "Common Tags to all resources"
@@ -25,4 +29,9 @@ variable "common-tags" {
 variable "instance_type" {
   type        = string
   description = "Type for aws EC2 instance"
+}
+
+variable "public_subnets" {
+  description = "A list of public subnets inside the VPC."
+  default     = []
 }
