@@ -30,8 +30,23 @@ variable "instance_type" {
   type        = string
   description = "Type for aws EC2 instance"
 }
-
 variable "public_subnets" {
   description = "A list of public subnets inside the VPC."
   default     = []
+}
+variable "user" {
+  type        = string
+  description = "Username to access the virtual machine"
+}
+variable "disk_size" {
+  type        = number
+  description = "Disk Size"
+}
+variable "public_key_path" {
+  description = "Public key path"
+  default = "~/.ssh/id_rsa.pub"
+}
+variable "instance_count" {
+  description = "Number of Instance"
+  default = 2
 }

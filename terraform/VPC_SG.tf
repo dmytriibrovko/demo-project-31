@@ -18,7 +18,8 @@ resource "aws_subnet" "subnet_public_eks" {
   vpc_id = aws_vpc.vpc-demo-eks.id
   cidr_block = var.public_subnets[count.index]
   map_public_ip_on_launch = "true"
-  availability_zone = element(var.availability_zone, count.index )
+  availability_zone_id = data.aws_availability_zones.zones.id
+  #availability_zone = element(var.availability_zone, count.index )
   tags = merge(var.common-tags, { Name = "${var.common-tags["Environment"]} -Subnet public first- ${var.common-tags["Project"]}" })
 }
 
@@ -54,39 +55,4 @@ resource "aws_security_group" "all_worker_mgmt" {
       "192.168.0.0/16",
     ]
   }
-}
-
-
-#----- k8s cluster -------
-data "aws_eks_cluster" "cluster" {
-  name = module.cluster.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.cluster.cluster_id
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
-}
-
-module "cluster" {
-  source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = var.project_name
-  cluster_version = "1.17"
-  subnets         = aws_subnet.subnet_public_eks.*.id
-  vpc_id          = aws_vpc.vpc-demo-eks.id
-  cluster_endpoint_private_access = true
-
-  worker_groups = [
-    {
-      name = "worker-group-1"
-      instance_type = "m4.large"
-      asg_desired_capacity = 1
-      additional_security_group_ids = [aws_security_group.all_worker_mgmt.id]
-    }
-  ]
 }
