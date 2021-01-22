@@ -1,3 +1,6 @@
+provider "aws" {
+  region = var.region
+}
 #----- k8s cluster -------
 data "aws_eks_cluster" "cluster" {
   name = module.cluster.cluster_id
@@ -30,7 +33,7 @@ module "cluster" {
       min_capacity = 2
 
       instance_type = var.instance_type
-      source_security_group_ids = [aws_security_group.all_worker_mgmt.id]
+      source_security_group_ids = [aws_security_group.all_worker.id]
       k8s_labels = merge(var.common-tags, { Name = "${var.common-tags["Environment"]} -Route- ${var.common-tags["Project"]}" })
     }
   }

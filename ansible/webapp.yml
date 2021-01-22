@@ -1,0 +1,45 @@
+---
+- name: app setup
+  hosts: all
+  gather_facts: no
+  become: yes
+
+  vars:
+    version: v1
+
+  tasks:
+    #Install 2 packages according to the list
+    - name: install packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - docker.io
+        - python3-pip
+    #Anisble module for docker control
+    - name: install pip for docker
+      pip:
+        name: docker
+    #Change the docker's cofing
+    - name: configure docker
+      copy:
+        content: '{"userland-proxy" : false}'
+        dest: /etc/docker/daemon.json
+      notify: restart docker
+
+    #Run container
+    - name: docker run
+      docker_container:
+        name: "demo-project-31-{{ version }}"
+        image: "dmytribrovko/demo-project-31:{{ version }}"
+        restart_policy: unless-stopped
+        published_ports:
+          - 80:80
+
+    handlers:
+      - name: resstart docker
+        systemd:
+          name: docker
+          state: restarted
+

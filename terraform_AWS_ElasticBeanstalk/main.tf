@@ -1,3 +1,6 @@
+provider "aws" {
+  region = var.region
+}
 ##------ VPC -------
 resource "aws_vpc" "vpc-demo-ebs3" {
   cidr_block = var.cidr_vpc

@@ -1,9 +1,9 @@
 .idea
 venv
 web_server/__pycache__/
-/terraform/terraform.tfstate
-/terraform/terraform.tfstate.backup
-/terraform/.terraform.lock.hcl
-/terraform/.terraform/
-/terraform/main.tf/
-/terraform/crash.log
+/terraform_AWS_EC2/terraform.tfstate
+/terraform_AWS_EC2/terraform.tfstate.backup
+/terraform_AWS_EC2/.terraform.lock.hcl
+/terraform_AWS_EC2/.terraform/
+/terraform_AWS_EC2/main.tf/
+/terraform_AWS_EC2/crash.log

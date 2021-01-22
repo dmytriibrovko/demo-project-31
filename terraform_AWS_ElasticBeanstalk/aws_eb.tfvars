@@ -1,9 +1,5 @@
 region      = "eu-north-1"
 availability_zone = ["eu-north-1a", "eu-north-1b"]
-user = "ubuntu"
-public_key_path = "~/.ssh/id_rsa.pub"
-instance_type = "t3.micro"
-disk_size = "20"
 project_name = "demo-project-31-stage"
+instance_type = "t3.micro"
 public_subnets = ["10.1.10.0/24", "10.1.20.0/24"]
-instance_count = 2

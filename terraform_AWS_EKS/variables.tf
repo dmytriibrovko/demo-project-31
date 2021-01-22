@@ -26,44 +26,16 @@ variable "common-tags" {
     Environment = "Stage"
   }
 }
-variable "worker_instance_type" {
-  type        = string
-  description = "Type for aws EC2 instance for Worker node"
-}
-variable "master_instance_type" {
-  type        = string
-  description = "Type for aws EC2 instance for Master node"
-}
 variable "public_subnets" {
   description = "A list of public subnets inside the VPC."
   default     = []
-}
-variable "user" {
-  type        = string
-  description = "Username to access the virtual machine"
-}
-variable "worker_disk_size" {
-  type        = number
-  description = "Disk Size"
-}
-variable "master_disk_size" {
-  type        = number
-  description = "Disk Size"
-}
-variable "public_key_path" {
-  description = "Public key path"
-  default = "~/.ssh/id_rsa.pub"
-}
-variable "instance_count_worker" {
-  description = "Number of Instance"
-  default = 2
-}
-variable "instance_count_master" {
-  description = "Number of Instance"
-  default = 2
 }
 variable "allow_ports" {
   description = "List of ports to open for server"
   type = list
   default = ["80","443","22","8080"]
+}
+variable "instance_type" {
+  type        = string
+  description = "Type for aws EC2 instance for Worker node"
 }

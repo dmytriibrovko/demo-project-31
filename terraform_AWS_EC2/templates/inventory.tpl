@@ -1,5 +1,9 @@
-[hosts]
-%{ for ip in hosts ~}
+[master]
+%{ for ip in master ~}
+${ip}
+%{ endfor ~}
+[worker]
+%{ for ip in worker ~}
 ${ip}
 %{ endfor ~}
 
