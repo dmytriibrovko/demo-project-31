@@ -1,5 +1,7 @@
-${hosts}
-
+[hosts]
+%{ for ip in hosts ~}
+${ip}
+%{ endfor ~}
 
 [all:vars]
 ansible_user = ${user}

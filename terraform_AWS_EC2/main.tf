@@ -43,3 +43,13 @@ resource "aws_instance" "demo-project-31" {
   }
   tags = merge(var.common-tags, { Name = "${var.common-tags["Environment"]} ${var.common-tags["Project"]}" })
 }
+
+resource "local_file" "hosts_cfg" {
+  content = templatefile("templates/inventory.tpl",
+  {
+    user = var.user
+    hosts = aws_instance.demo-project-31.*.public_ip
+  }
+  )
+  filename = "../ansible/inventory/hosts.cfg"
+}
