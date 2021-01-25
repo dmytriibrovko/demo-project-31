@@ -40,8 +40,8 @@ resource "aws_route_table_association" "rta_subnet_public-eks" {
   route_table_id = aws_route_table.rtb_public_demo_eks.id
 }
 ##---- ECS Instance Security group
-resource "aws_security_group" "kubernetes_worker" {
-  name_prefix = "all_worker_management"
+resource "aws_security_group" "standart" {
+  name_prefix = "standart"
   vpc_id      = aws_vpc.vpc-demo-31-ec2.id
 
   dynamic "ingress" {
@@ -66,4 +66,40 @@ resource "aws_security_group" "kubernetes_worker" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+}##---- ECS Instance Security group
+resource "aws_security_group" "kubernetes_sg" {
+  name_prefix = "kubernetes_sg"
+  vpc_id      = aws_vpc.vpc-demo-31-ec2.id
+
+  dynamic "ingress" {
+    for_each = var.kubernetes_port
+    content {
+      from_port = ingress.value
+      to_port   = ingress.value
+      protocol  = "tcp"
+
+      cidr_blocks = [
+        "0.0.0.0/0",
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16",
+      ]
+    }
+  }
+  egress {
+    from_port = 0
+    protocol = "-1"
+    to_port = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "node_port_services" {
+  cidr_blocks       = var.public_subnets
+  description       = "Allows ingress traffic from private subnets to Node Ports"
+  from_port         = 30000
+  to_port           = 32767
+  protocol          = "tcp"
+  security_group_id = aws_security_group.kubernetes_sg.id
+  type              = "ingress"
 }

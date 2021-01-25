@@ -7,3 +7,5 @@ web_server/__pycache__/
 /terraform_AWS_EC2/.terraform/
 /terraform_AWS_EC2/main.tf/
 /terraform_AWS_EC2/crash.log
+
+kubeconfig

@@ -34,7 +34,7 @@ resource "aws_instance" "demo-project-31-master" {
   count = var.instance_count_master
   ami =  data.aws_ami.latest_ubuntu.id
   instance_type = var.master_instance_type
-  vpc_security_group_ids = [aws_security_group.kubernetes_worker.id]
+  vpc_security_group_ids = [aws_security_group.standart.id, aws_security_group.kubernetes_sg.id]
   subnet_id = aws_subnet.subnet_public_demo-31_ec2[count.index].id
   key_name = aws_key_pair.ec2key.key_name
 
@@ -51,7 +51,7 @@ resource "aws_instance" "demo-project-31-worker" {
   count = var.instance_count_worker
   ami =  data.aws_ami.latest_ubuntu.id
   instance_type = var.worker_instance_type
-  vpc_security_group_ids = [aws_security_group.kubernetes_worker.id]
+  vpc_security_group_ids = [aws_security_group.standart.id, aws_security_group.kubernetes_sg.id]
   subnet_id = aws_subnet.subnet_public_demo-31_ec2[count.index].id
   key_name = aws_key_pair.ec2key.key_name
 
@@ -69,8 +69,8 @@ resource "local_file" "hosts_cfg" {
   content = templatefile("templates/inventory.tpl",
   {
     user = var.user
-    master = aws_instance.demo-project-31-master.*.public_ip
-    worker = aws_instance.demo-project-31-worker.*.public_ip
+    master = aws_eip.master_static_ip.*.public_ip
+    worker = aws_eip.worker_static_ip.*.public_ip
   }
   )
   filename = "../ansible/inventory/hosts.cfg"

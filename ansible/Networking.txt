@@ -1,0 +1,11 @@
+If you need to use flannel as your network use.
+https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+In case, your choice is Calico get it from here.
+https://docs.projectcalico.org/v3.16/manifests/calico.yaml
+
+For Weave get the same from here.
+https://cloud.weave.works/k8s/net
+
+Role based access control
+https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml

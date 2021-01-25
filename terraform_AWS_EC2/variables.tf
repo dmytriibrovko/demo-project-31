@@ -10,7 +10,7 @@ variable "cidr_vpc" {
   default     = "10.1.0.0/16"
 }
 variable "cidr_subnet" {
-  default = ["10.0.10.0/24", "10.0.20.0/24"]
+  default = ["10.1.10.0/24", "10.1.20.0/24"]
   type = list
 }
 variable "availability_zone" {
@@ -66,4 +66,8 @@ variable "allow_ports" {
   description = "List of ports to open for server"
   type = list
   default = ["80","443","22","8080"]
+}
+variable "kubernetes_port" {
+  description = "List of ports to open for Kubernetes"
+  type = list
 }
