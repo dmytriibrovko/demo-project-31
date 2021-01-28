@@ -1,0 +1,31 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: demo-project-31
+  namespace: logging
+spec:
+  version: 7.6.2
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  nodeSets:
+    - name: default
+      count: 1
+      config:
+        node.master: true
+        node.data: true
+        node.ingest: true
+        node.store.allow_mmap: false
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+            storageClassName: local-path
+
+#PASSWORD=$(k get secret demo-project-31-es-elastic-user -o=jsonpath='{ .data.elastic}' |base64 --decode)
