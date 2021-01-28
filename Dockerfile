@@ -1,4 +1,5 @@
 FROM python:3.8.5
-COPY ./ ./
+COPY web_server /web_server
+WORKDIR /web_server
 RUN pip install -r requirements.txt
-CMD [ "python", "web_server/server.py" ]
+CMD [ "python", "server.py" ]

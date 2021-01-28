@@ -5,10 +5,11 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: dmytribrovko/demo-project-31
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v2"
+  weight: 100
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,6 +40,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+  containerPort: 5000
 
 ingress:
   enabled: false
